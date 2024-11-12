@@ -1,0 +1,14 @@
+# по нормальному я бы вообще сделала через helm 
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app-service
+spec:
+  selector:
+    app: flask-app
+  ports:
+    - protocol: TCP
+      port: 80  # порт для достпа к сервису внутри кластера
+      targetPort: 5000  # порт который Flask слушает
+      nodePort: 30001  # порт на узле для доступа
+  type: NodePort 
