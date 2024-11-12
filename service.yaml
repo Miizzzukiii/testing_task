@@ -10,5 +10,5 @@ spec:
     - protocol: TCP
       port: 80  # порт для достпа к сервису внутри кластера
       targetPort: 5000  # порт который Flask слушает
-      nodePort: 30001  # порт на узле для доступа
+      nodePort: 30001  # порт на узле для доступа : http://<Node_IP>:30007
   type: NodePort 
