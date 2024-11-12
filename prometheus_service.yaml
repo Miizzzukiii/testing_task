@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+spec:
+  selector:
+    app: prometheus  
+  ports:
+    - protocol: TCP
+      port: 9090        # порт внутри кластера для Prometheus
+      targetPort: 9090   # порт контейнера, на котором работает Prometheus
+  type: ClusterIP      
