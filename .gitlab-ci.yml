@@ -1,0 +1,37 @@
+image: docker:latest
+
+services:
+  - docker:dind  
+
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA  # Уникальный тег образа
+
+stages:
+  - build
+  - push_to_gitlab_registry
+  - deploy_to_dev  
+
+build-job:
+  stage: build
+  script:
+    - docker build -t $IMAGE_TAG -f Dockerfile .  
+    - docker images  
+  artifacts:
+    paths:
+      - Dockerfile  # Добавляем Dockerfile как артефакт
+
+
+push_to_gitlab_registry:
+  stage: push_to_gitlab_registry
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY  
+    - docker push $IMAGE_TAG  
+
+
+deploy_to_dev:
+  stage: deploy_to_dev
+  script:
+    - kubectl apply -f k8s-deployment.yaml  
+    - kubectl apply -f k8s-service.yaml     # сервис путь будет NodePort например
+    - kubectl get pods -A                  
+    - kubectl get deploy -A                 
