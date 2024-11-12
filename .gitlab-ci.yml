@@ -32,7 +32,9 @@ deploy_to_dev:
   stage: deploy_to_dev
   script:
     - kubectl apply -f deployment.yaml  
-    - kubectl apply -f service.yaml     # сервис путь будет NodePort например, но конечно лучше бы через LoadBalancer + настроить Ingress и тд
+    - kubectl apply -f service.yaml  # сервис путь будет NodePort например, но конечно лучше бы через LoadBalancer + настроить Ingress и тд
+    - kubectl apply -f prometheus_configmap.yaml
+    - kubectl apply -f prometheus_deployment.yaml
     - kubectl get pods -A                  
     - kubectl get deploy -A   
     
