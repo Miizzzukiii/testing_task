@@ -31,7 +31,7 @@ push_to_gitlab_registry:
 deploy_to_dev:
   stage: deploy_to_dev
   script:
-    - kubectl apply -f k8s-deployment.yaml  
-    - kubectl apply -f k8s-service.yaml     # сервис путь будет NodePort например
+    - kubectl apply -f deployment.yaml  
+    - kubectl apply -f service.yaml     # сервис путь будет NodePort например
     - kubectl get pods -A                  
     - kubectl get deploy -A                 
