@@ -1,4 +1,4 @@
-image: docker:latest
+image: docker: 27.1.1 # docker-ce latest versions: 27.3.0, 27.1.1, 20.10.25 , выберем что-то среднее (но я бы почитала дополнительно про стабильность)
 
 services:
   - docker:dind  
@@ -32,6 +32,11 @@ deploy_to_dev:
   stage: deploy_to_dev
   script:
     - kubectl apply -f deployment.yaml  
-    - kubectl apply -f service.yaml     # сервис путь будет NodePort например
+    - kubectl apply -f service.yaml     # сервис путь будет NodePort например, но конечно лучше бы через LoadBalancer + настроить Ingress и тд
     - kubectl get pods -A                  
-    - kubectl get deploy -A                 
+    - kubectl get deploy -A   
+    
+    #или если деплой на другом хосте , то через eval $(ssh-agent -s) и тд 
+   
+    
+
